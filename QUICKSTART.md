@@ -190,13 +190,13 @@ rm backups/old_*.dump.gz
 
 ## Important Notes
 
-⚠️ **Default Password**: The database uses password `postgres` - change this in production!
+**Default Password**: The database uses password `postgres` - change this in production!
 
-⚠️ **Backup Regularly**: Run `./backup.sh` daily or set up automated backups
+**Backup Regularly**: Run `./backup.sh` daily or set up automated backups
 
-⚠️ **Disk Space**: Ensure you have at least 10GB free space
+**Disk Space**: Ensure you have at least 10GB free space
 
-✅ **Data Safety**: Database files are in `./postgres_data/` - don't delete this!
+**Data Safety**: Database files are in `./postgres_data/` - don't delete this!
 
 ---
 

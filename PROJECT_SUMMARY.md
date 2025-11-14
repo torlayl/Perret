@@ -1,10 +1,9 @@
 # PROJECT SETUP SUMMARY
 
-## 📦 What Has Been Created
+## What Has Been Created
 
 Complete TimescaleDB setup for Tour Perret sensor data with backup/restore capabilities.
 
-### Core Files Created
 
 #### 1. Database Configuration
 - **`docker-compose.yml`** - Docker setup for TimescaleDB with PostgreSQL 16
@@ -80,40 +79,7 @@ Complete TimescaleDB setup for Tour Perret sensor data with backup/restore capab
 
 ---
 
-## 🎯 Key Features Implemented
 
-### TimescaleDB Hypertables
-✅ Automatic partitioning by time (1-day chunks)  
-✅ Efficient chunk skipping for faster queries  
-✅ Automatic compression after 7 days  
-✅ Continuous aggregates (hourly statistics)  
-✅ Optimized indexes on time, device, location  
-
-### Data Management
-✅ Handles 1.6GB+ JSON log files  
-✅ Batch processing for efficiency  
-✅ Error handling and recovery  
-✅ Progress tracking during import  
-✅ Data validation and statistics  
-
-### Backup & Restore
-✅ Full database backup with compression  
-✅ Metadata tracking  
-✅ Automatic cleanup of old backups  
-✅ One-command restore  
-✅ Verification after restore  
-✅ Handles compressed backups  
-
-### Operations
-✅ Docker-based deployment  
-✅ Pre-configured optimization  
-✅ Health checks  
-✅ Easy querying with helper script  
-✅ Comprehensive documentation  
-
----
-
-## 🚀 How to Use
 
 ### Initial Setup (First Time)
 
@@ -173,7 +139,7 @@ ls -lht backups/
 
 ---
 
-## 📊 Database Schema
+## Database Schema
 
 ### Main Table: `sensor_data` (Hypertable)
 
@@ -211,14 +177,14 @@ Latest reading from each device (for quick dashboard queries)
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 ### Database Connection
 - **Host**: localhost
 - **Port**: 5432
 - **Database**: tourperret
 - **User**: postgres
-- **Password**: postgres (⚠️ Change in production!)
+- **Password**: postgres (Change in production!)
 
 ### Storage Locations
 - **Database files**: `./postgres_data/`
@@ -235,7 +201,7 @@ Edit `docker-compose.yml` to change:
 
 ---
 
-## 📈 Performance Optimization
+## Performance Optimization
 
 ### Current Settings (in docker-compose.yml)
 - `shared_buffers=512MB` - Shared memory cache
@@ -256,7 +222,7 @@ Edit `docker-compose.yml` to change:
 
 ---
 
-## 🛠️ Maintenance Tasks
+## Maintenance Tasks
 
 ### Regular (Weekly)
 ```bash
@@ -293,7 +259,7 @@ df -h
 
 ---
 
-## 📚 Documentation Files
+## Documentation Files
 
 | File | Purpose |
 |------|---------|
@@ -304,7 +270,7 @@ df -h
 
 ---
 
-## ⚠️ Important Notes
+## Important Notes
 
 1. **Backup Regularly**: Set up automated daily backups (see BACKUP_RESTORE_PROCEDURES.md)
 
@@ -325,7 +291,7 @@ df -h
 
 ---
 
-## 🎓 Learning Resources
+## Learning Resources
 
 - TimescaleDB documentation: https://docs.timescale.com/
 - PostgreSQL documentation: https://www.postgresql.org/docs/
@@ -334,7 +300,7 @@ df -h
 
 ---
 
-## 📞 Getting Help
+## Getting Help
 
 1. Check `README.md` for detailed information
 2. Review `BACKUP_RESTORE_PROCEDURES.md` for backup issues
@@ -344,7 +310,7 @@ df -h
 
 ---
 
-## ✅ Checklist for Production Use
+## Checklist for Production Use
 
 - [ ] Change default database password
 - [ ] Set up automated daily backups (cron/systemd)
@@ -361,6 +327,6 @@ df -h
 
 **Project Created**: November 13, 2025  
 **Version**: 1.0  
-**Status**: Production Ready ✅
+**Status**: Production Ready
 
 All scripts are executable and ready to use!

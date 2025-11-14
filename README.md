@@ -2,7 +2,7 @@
 
 Complete solution for storing, managing, and analyzing IoT sensor data from Tour Perret using TimescaleDB hypertables.
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Features](#features)
@@ -17,7 +17,7 @@ Complete solution for storing, managing, and analyzing IoT sensor data from Tour
 
 ---
 
-## 🎯 Overview
+## Overview
 
 This project provides a complete infrastructure to:
 - Store 1.6GB+ of IoT sensor data from Tour Perret building
@@ -37,7 +37,7 @@ The system processes JSON log data from ELSYS EMS sensors deployed at Tour Perre
 
 ---
 
-## ✨ Features
+## Features
 
 ### TimescaleDB Hypertables
 - **Automatic partitioning**: Data split into 1-day chunks
@@ -59,7 +59,7 @@ The system processes JSON log data from ELSYS EMS sensors deployed at Tour Perre
 
 ---
 
-## 📦 Prerequisites
+## Prerequisites
 
 ### Required Software
 
@@ -91,7 +91,7 @@ The system processes JSON log data from ELSYS EMS sensors deployed at Tour Perre
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Clone/Download the Project
 
@@ -154,7 +154,7 @@ SELECT COUNT(*) FROM sensor_data;
 
 ---
 
-## 🔧 Detailed Setup
+## Detailed Setup
 
 ### Step 1: Understanding the Directory Structure
 
@@ -182,7 +182,7 @@ The `docker-compose.yml` is pre-configured with optimal settings:
 - **Port**: 5432 (PostgreSQL default)
 - **Database**: tourperret
 - **User**: postgres
-- **Password**: postgres (⚠️ Change in production!)
+- **Password**: postgres (Change in production!)
 
 To customize, edit `docker-compose.yml`:
 
@@ -233,7 +233,7 @@ Expected output:
 
 ---
 
-## 📊 Data Import
+## Data Import
 
 ### Import Process Overview
 
@@ -298,14 +298,14 @@ For the 1.6GB log file:
 
 The script displays:
 ```
-✓ Connected to database: tourperret
-📖 Reading file: ./Data/tourperret.log
-📦 Batch size: 1000
-⚙️  Processing...
+Connected to database: tourperret
+Reading file: ./Data/tourperret.log
+Batch size: 1000
+Processing...
 
-  ✓ Inserted batch: 1,000 records imported so far...
-  📊 Processed 10,000 lines (9,987 imported, 13 errors)
-  ✓ Inserted batch: 2,000 records imported so far...
+  Inserted batch: 1,000 records imported so far...
+  Processed 10,000 lines (9,987 imported, 13 errors)
+  Inserted batch: 2,000 records imported so far...
   ...
 ```
 
@@ -331,7 +331,7 @@ SELECT * FROM timescaledb_information.chunks;
 
 ---
 
-## 🔍 Querying Data
+## Querying Data
 
 ### TimescaleDB provides powerful time-series functions
 
@@ -462,7 +462,7 @@ GROUP BY a.dev_place, b.dev_place;
 
 ---
 
-## 💾 Backup and Restore
+## Backup and Restore
 
 ### Quick Backup
 
@@ -497,7 +497,7 @@ See **[BACKUP_RESTORE_PROCEDURES.md](BACKUP_RESTORE_PROCEDURES.md)** for:
 
 ---
 
-## 🔧 Maintenance
+## Maintenance
 
 ### Database Maintenance Tasks
 

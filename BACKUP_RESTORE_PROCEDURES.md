@@ -100,7 +100,7 @@ export BACKUP_DIR=./custom_backups
 
 ## Restore Procedures
 
-### ⚠️ IMPORTANT WARNINGS
+### IMPORTANT WARNINGS
 
 - **DATA LOSS**: Restoring will **DELETE ALL EXISTING DATA** in the target database
 - **BACKUP FIRST**: Always create a backup of the current database before restoring
