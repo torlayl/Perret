@@ -1,0 +1,44 @@
+# Database files
+postgres_data/
+*.dump
+*.dump.gz
+*.log
+
+# Backup files  
+backups/*.dump
+backups/*.dump.gz
+backups/*.meta
+backups/*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+temp/
+restore.log
+
+# Environment variables
+.env
+.env.local
+
+# Don't ignore the data file (uncomment if you want to track it)
+# !Data/tourperret.log
