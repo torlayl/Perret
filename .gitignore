@@ -42,3 +42,6 @@ restore.log
 
 # Don't ignore the data file (uncomment if you want to track it)
 # !Data/tourperret.log
+
+# Other files
+PROJECT_SUMMARY.md
