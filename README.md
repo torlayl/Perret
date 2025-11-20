@@ -19,7 +19,7 @@ Complete solution for storing, managing, and analyzing IoT sensor data from Tour
 
 ## Overview
 
-This project provides a complete infrastructure to:
+This project provides a complete workflow to:
 - Store 1.6GB+ of IoT sensor data from Tour Perret building
 - Use TimescaleDB hypertables for efficient time-series storage
 - Enable fast queries on large datasets
@@ -28,7 +28,7 @@ This project provides a complete infrastructure to:
 
 ### Data Description
 
-The system processes JSON log data from ELSYS EMS sensors deployed at Tour Perret, collecting:
+The system processes JSON log data from sensors deployed at Tour Perret in Grenoble city, collecting:
 - **Environmental data**: Temperature, humidity, dewpoint
 - **Motion sensors**: Acceleration data (x, y, z), motion detection
 - **Device metrics**: Battery voltage, signal strength (RSSI, SNR)
@@ -42,14 +42,6 @@ The system processes JSON log data from ELSYS EMS sensors deployed at Tour Perre
 ### TimescaleDB Hypertables
 - **Automatic partitioning**: Data split into 1-day chunks
 - **Chunk skipping**: Faster queries by skipping irrelevant data
-- **Compression**: Automatic compression after 7 days
-- **Continuous aggregates**: Pre-computed hourly statistics
-
-### Data Management
-- **Efficient import**: Batch processing of large JSON files
-- **Flexible queries**: Standard SQL with time-series extensions
-- **Indexing**: Optimized indexes for common query patterns
-- **Raw data preservation**: Original JSON stored for reference
 
 ### Operations
 - **Automated backups**: Scheduled backup with compression
@@ -86,8 +78,6 @@ The system processes JSON log data from ELSYS EMS sensors deployed at Tour Perre
 ### System Requirements
 
 - **Disk Space**: At least 10GB free (for database + backups)
-- **RAM**: 4GB minimum, 8GB recommended
-- **CPU**: 2 cores minimum, 4 cores recommended
 
 ---
 
@@ -96,7 +86,7 @@ The system processes JSON log data from ELSYS EMS sensors deployed at Tour Perre
 ### 1. Clone/Download the Project
 
 ```bash
-cd /home/ltor/Nextcloud/LIG/Drakkar/Perret
+cd ./Perret
 ```
 
 ### 2. Make Scripts Executable
@@ -135,6 +125,7 @@ docker exec -it timescaledb_tourperret psql -U postgres -d tourperret -c "\dt"
 pip3 install -r requirements.txt
 
 # Import the log file
+# Data available at : https://perscido.univ-grenoble-alpes.fr/datasets/DS397
 python3 import_data.py --file ./Data/tourperret.log
 ```
 
@@ -206,13 +197,6 @@ docker-compose logs -f
 docker-compose ps
 ```
 
-The database will:
-1. Create the container
-2. Initialize PostgreSQL
-3. Load TimescaleDB extension
-4. Run initialization scripts from `init-scripts/`
-5. Create hypertables and indexes
-
 ### Step 4: Verify Installation
 
 ```bash
@@ -259,55 +243,6 @@ This uses default settings:
 - Password: `postgres`
 - Batch size: 1000
 
-### Advanced Import Options
-
-```bash
-# Custom file location
-python3 import_data.py --file /path/to/data.log
-
-# Custom database settings
-python3 import_data.py \
-    --host localhost \
-    --port 5432 \
-    --dbname tourperret \
-    --user postgres \
-    --password postgres
-
-# Larger batch size for faster import
-python3 import_data.py --batch-size 5000
-
-# Stop on first error (default: continue on errors)
-python3 import_data.py --stop-on-error
-
-# Full example
-python3 import_data.py \
-    --file ./Data/tourperret.log \
-    --batch-size 2000 \
-    --dbname tourperret
-```
-
-### Import Performance
-
-For the 1.6GB log file:
-- **Time**: 20-40 minutes (depending on hardware)
-- **Records**: ~millions of sensor readings
-- **Batch size**: 1000-5000 recommended
-- **Memory**: Low (streaming line-by-line)
-
-### Monitoring Import Progress
-
-The script displays:
-```
-Connected to database: tourperret
-Reading file: ./Data/tourperret.log
-Batch size: 1000
-Processing...
-
-  Inserted batch: 1,000 records imported so far...
-  Processed 10,000 lines (9,987 imported, 13 errors)
-  Inserted batch: 2,000 records imported so far...
-  ...
-```
 
 ### Post-Import Verification
 
@@ -608,21 +543,6 @@ Then restart:
 docker-compose restart
 ```
 
-### Data Retention Policy
-
-To automatically drop old data:
-
-```sql
--- Drop chunks older than 90 days
-SELECT add_retention_policy('sensor_data', INTERVAL '90 days');
-
--- View retention policies
-SELECT * FROM timescaledb_information.jobs 
-WHERE proc_name = 'policy_retention';
-```
-
----
-
 ## Troubleshooting
 
 ### Database Connection Issues
@@ -643,47 +563,6 @@ docker-compose logs timescaledb
 docker exec timescaledb_tourperret pg_isready -U postgres
 ```
 
-### Import Errors
-
-**Problem**: Import script fails with connection error
-
-```bash
-# Ensure database is running
-docker-compose ps
-
-# Test Python connectivity
-python3 -c "import psycopg2; print('psycopg2 installed')"
-
-# Try with verbose error messages
-python3 import_data.py --stop-on-error
-```
-
-**Problem**: Import is very slow
-
-```bash
-# Increase batch size
-python3 import_data.py --batch-size 5000
-
-# Check system resources
-top
-iostat -x 5
-```
-
-### Disk Space Issues
-
-**Problem**: Out of disk space
-
-```bash
-# Check disk usage
-df -h
-
-# Clean old backups
-rm backups/tourperret_backup_old*.dump.gz
-
-# Compress database (runs automatically after 7 days)
-docker exec timescaledb_tourperret psql -U postgres -d tourperret -c \
-    "SELECT compress_chunk(i) FROM show_chunks('sensor_data') i;"
-```
 
 ### Performance Issues
 
@@ -731,14 +610,6 @@ See **[BACKUP_RESTORE_PROCEDURES.md](BACKUP_RESTORE_PROCEDURES.md)** for detaile
 - [Hypertables Guide](https://docs.timescale.com/use-timescale/latest/hypertables/)
 - [SQL Functions](https://docs.timescale.com/api/latest/)
 
-### PostgreSQL Documentation
-- [PostgreSQL Manual](https://www.postgresql.org/docs/)
-- [pg_dump/pg_restore](https://www.postgresql.org/docs/current/backup-dump.html)
-
-### Docker Documentation
-- [Docker Compose](https://docs.docker.com/compose/)
-- [Docker PostgreSQL](https://hub.docker.com/_/postgres)
-
 ---
 
 ## Configuration Reference
@@ -779,7 +650,7 @@ chmod 600 backups/*.dump*
 
 ## License
 
-ToDo
+LGPL
 
 ---
 
