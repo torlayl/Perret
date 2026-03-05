@@ -5,10 +5,10 @@
 
 ```bash
 cd ./Perret
-docker-compose up -d
+sudo docker-compose up -d
 ```
 
-Wait about 10 seconds for initialization.
+Wait about 5 seconds for initialization.
 
 ### 2. Verify Database is Running
 
@@ -17,22 +17,6 @@ docker ps | grep timescaledb
 ./query.sh stats
 ```
 
-You should see the container running and empty statistics.
-
-### 3. Install Python Dependencies
-
-```bash
-pip3 install -r requirements.txt
-```
-
-### 4. Import Your Data
-
-```bash
-# This will take 20-40 minutes for the full 1.6GB file
-python3 import_data.py --file ./Data/tourperret.log
-```
-
-**Progress will be displayed every 10,000 lines.**
 
 ### 5. Query Your Data
 
