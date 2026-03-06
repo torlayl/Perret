@@ -83,15 +83,17 @@ elif [ "$1" == "latest" ]; then
 elif [ "$1" == "chunks" ]; then
     header "Hypertable Chunks"
     query -c "
-        SELECT 
-            chunk_name,
-            range_start::date as start_date,
-            range_end::date as end_date,
-            pg_size_pretty(total_bytes) as size,
-            pg_size_pretty(compressed_total_size) as compressed
-        FROM timescaledb_information.chunks
-        WHERE hypertable_name = 'sensor_data'
-        ORDER BY range_start DESC
+        SELECT
+            c.chunk_name,
+            c.range_start::date as start_date,
+            c.range_end::date as end_date,
+            pg_size_pretty(s.total_bytes) as size,
+            pg_size_pretty(cs.after_compression_total_bytes) as compressed
+        FROM timescaledb_information.chunks c
+        JOIN chunks_detailed_size('sensor_data') s USING (chunk_schema, chunk_name)
+        LEFT JOIN chunk_compression_stats('sensor_data') cs USING (chunk_schema, chunk_name)
+        WHERE c.hypertable_name = 'sensor_data'
+        ORDER BY c.range_start DESC
         LIMIT 20;
     "
 

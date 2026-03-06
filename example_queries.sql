@@ -19,12 +19,13 @@ FROM sensor_data;
 -- Records per device
 SELECT 
     device_name,
+    sensor_data.dev_eui,
     dev_place,
     COUNT(*) as record_count,
     MIN(time)::date as first_reading,
     MAX(time)::date as last_reading
 FROM sensor_data
-GROUP BY device_name, dev_place
+GROUP BY device_name, dev_place, sensor_data.dev_eui
 ORDER BY record_count DESC;
 
 -- Database size
